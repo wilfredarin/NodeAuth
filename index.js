@@ -8,7 +8,7 @@ import passport  from 'passport';
 import GoogleStrategy from 'passport-google-oidc';
 
 import userRouter from "./src/features/user/user.routes.js";
-
+import otpRouter from "./src/features/otp/otp.routes.js"
 
 const app = express();
 app.set("view engine","ejs");
@@ -30,5 +30,6 @@ app.get("/",(req,res)=>{
 
 
 app.use("/user", userRouter);
+app.use("/otp",otpRouter);
 export default app;
 // 

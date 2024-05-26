@@ -1,0 +1,55 @@
+<h3>Generate OTP</h3>
+
+<form action="/otp/" method="post" class="p-5">
+  <div class="form-group">
+    <label for="email">Registered Email</label>
+    <input
+      required
+      name="email"
+      type="text"
+      class="form-control"
+      id="email"
+      aria-describedby="emailHelp"
+      placeholder="Enter your email id"
+    />
+  </div>
+  <button type="submit" class="btn btn-primary mt-2">Send OTP</button>
+</form>
+<% if(email){%>
+<form action="/otp/verify-otp/<%=email%>" method="post" class="p-5">
+    <div class="form-group">  
+        <input
+            required
+            name="email"
+            type="text"
+            class="form-control"
+            id="email"
+            disabled
+            value="<%=email%>"
+            aria-describedby="emailHelp"
+        />
+        <div class="form-group">  
+          <input
+              required
+              name="newPassword"
+              type="text"
+              class="form-control"
+              id="newPassword"
+              placeholder="Enter New Password Here"
+              aria-describedby="emailHelp"
+          />
+        <input
+          required
+          name="otp"
+          type="text"
+          class="form-control"
+          id="otp"
+          aria-describedby="emailHelp"
+          placeholder="Enter OTP"
+        />
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Verify</button>
+  </form>
+  <%}%>
+<h3></h3>
+

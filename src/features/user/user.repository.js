@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { userSchema } from "./user.schema.js";
 // import { customErrorHandler } from "../../middlewares/errorHandler.js";
 import {compareHashedPassword} from "../../utils/hashPassword.js"
+import bcrypt from "bcrypt"
 
 const UserModel = mongoose.model("User", userSchema);
 
@@ -58,7 +59,7 @@ export const updateUserPasswordRepo = async (email, newpassword, next) => {
         error: { statusCode: 404, msg: "user not found" },
       };
     } else {
-      const newHashedPassword = await hashPassword(newpassword, next);
+      const newHashedPassword = await bcrypt.hash(newpassword, 12);
       user.password = newHashedPassword;
       let updatedUser = await user.save();
       return { success: true, msg: "Password updated successfully!" };
