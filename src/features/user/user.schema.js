@@ -8,6 +8,12 @@ export const userSchema = new mongoose.Schema({
     required: [true, "email is required"],
     match: [/^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/],
   },
-  password: { type: String, required: [true, "password is required"] }
+  password: { type: String},
+  googleId: {
+    type: String,
+  },
+  accessToken:  {
+    type: String,
+  }
 
 });

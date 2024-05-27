@@ -5,7 +5,7 @@ import {
   } from "./user.repository.js";
   import jwt from "jsonwebtoken";
   import bcrypt from "bcrypt";
-  // import { customErrorHandler } from "../../middlewares/errorHandler.js";
+import { revokeGoogleToken } from "../../config/passport-google.js";
  import path from "path";
 
 
@@ -24,7 +24,7 @@ import {
   
   export const userLogin = async (req, res, next) => {
     const resp = await userLoginRepo(req.body);
-    console.log("sss")
+    
     if (resp.success) {
       
       const token = jwt.sign(
@@ -42,16 +42,18 @@ import {
         .redirect("/user/home");
     } else {
       res.render("user-login",{error:resp.error.msg,userEmail:req.email});
+      
     }
   };
 
   export const updateUserPassword = async (email,newPassword,next) => {
-    const resp = await updateUserPasswordRepo(email, newPassword,next);
+    const resp = await updateUserPasswordRepo(email,newPassword,next);
     return resp;
   };
   
   
   export const userLogout = (req, res, next) => {
+    revokeGoogleToken(req.user.accessToken);
     res.clearCookie("jwtToken").redirect("/");
   };
   
