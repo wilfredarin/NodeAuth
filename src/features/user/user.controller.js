@@ -29,7 +29,7 @@ import { revokeGoogleToken } from "../../config/passport-google.js";
       
       const token = jwt.sign(
         //after image buffer - changed it to not pass entire user (earlier it was user:resp.res)
-        { _id: resp.res._id, email: resp.res.email },
+        { _id: resp.res._id, email: resp.res.email,accessToken:null },
         process.env.JWT_SECRET,
         {
           expiresIn: "1h",
@@ -53,7 +53,6 @@ import { revokeGoogleToken } from "../../config/passport-google.js";
   
   
   export const userLogout = (req, res, next) => {
-    revokeGoogleToken(req.user.accessToken);
     res.clearCookie("jwtToken").redirect("/");
   };
   

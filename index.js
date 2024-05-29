@@ -12,6 +12,7 @@ import {googlePassportConfig} from './src/config/passport-google.js';
 import userRouter from "./src/features/user/user.routes.js";
 import otpRouter from "./src/features/otp/otp.routes.js"
 
+
 const app = express();
 app.set("view engine","ejs");
 app.set("views",path.join(path.resolve(),"src","views"));
@@ -27,10 +28,6 @@ app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
 googlePassportConfig(passport); 
 
-// app.use(passport.initialize());
-// app.use(passport.session());
-
-
 app.get("/",(req,res)=>{
     //check if loged in 
     return res.render("user-login",{userEmail:req.email,error:null});
@@ -43,7 +40,7 @@ app.get(
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
     //see the structure of req object to understaand better
-    const payload = {_id: req.user._id, email: req.user.email };
+    const payload = {_id: req.user._id, email: req.user.email,accessToken:req.user.accessToken};
     jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' }, (err, token) => {
       if (err) throw err;
       res.cookie('jwtToken', token, { httpOnly: true });

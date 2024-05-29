@@ -7,8 +7,7 @@ export const auth = (req,res,next)=>{
             res.render("user-login",{userEmail:req.email,error:"Unauthorized Access! Login to continue"});
           } else {
             req._id = data._id;
-            req.email = data.email;
-            console.log(req.email,data);
+            req.email = data.email; 
             next();
           }
     });

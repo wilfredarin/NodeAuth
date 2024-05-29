@@ -6,18 +6,18 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import axios from 'axios';
 
 
-export const revokeGoogleToken = async (accessToken) => {
-  try {
-    await axios.post('https://oauth2.googleapis.com/revoke', null, {
-      params: {
-        token: accessToken,
-      },
-    });
-    console.log('Google access token revoked successfully');
-  } catch (error) {
-    console.error('Error revoking Google access token:', error.response.data);
-  }
-};
+
+//   try {
+//     await axios.post('https://oauth2.googleapis.com/revoke', null, {
+//       params: {
+//         token: accessToken,
+//       },
+//     });
+//     console.log('Google access token revoked successfully');
+//   } catch (error) {
+//     console.error('Error revoking Google access token:', error.response.data);
+//   }
+// };
 
 export const googlePassportConfig =  function(passport){
   passport.use(new GoogleStrategy({
@@ -32,8 +32,7 @@ export const googlePassportConfig =  function(passport){
         if (!user) {
           user = new UserModel({
             googleId: profile.id,
-            email: profile.emails[0].value,
-            accessToken: accessToken
+            email: profile.emails[0].value
           });
           await user.save();
         }
